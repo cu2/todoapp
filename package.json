@@ -1,0 +1,21 @@
+{
+  "name": "todoapp",
+  "version": "1.0.0",
+  "description": "Todo app for fun",
+  "main": "index.js",
+  "scripts": {
+    "start": "$(npm bin)/supervisor index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cucu",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mysql": "^2.11.1",
+    "sqlite3": "^3.1.4"
+  },
+  "devDependencies": {
+    "supervisor": "^0.11.0"
+  }
+}
