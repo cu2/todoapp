@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var bodyparser = require('body-parser');
 var sqlite3 = require('sqlite3').verbose();
@@ -12,7 +14,7 @@ var db = new sqlite3.Database('todo.db');
 app.use('/static', express.static(__dirname + '/static'));
 
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  res.sendFile(__dirname + '/index.html');
 });
 
 
