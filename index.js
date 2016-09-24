@@ -20,38 +20,30 @@ app.get('/', (req, res) => {
 });
 
 
-
 app.post('/todo/', (req, res) => {
   collection.insert({
     "text": req.body.text,
     "done": false,
-  }, (err, doc) => {
-    if (err) {
-      console.log(err);
-      res.status(500).json({
-        error: err,
-      });
-    } else {
-      res.json(doc);
-    }
+    "created_at": new Date(),
+  }).then((doc) => {
+    res.json(doc);
   });
 });
 
 app.get('/todo/', (req, res) => {
   // TODO: add filter based on req.query.done
-  collection.find({}, {}, (err, docs) => {
-    if (err) {
-      console.log(err);
-      res.status(500).json({
-        error: err,
-      });
-    } else {
-      res.json(docs);
-    }
+  collection.find({}, { sort: { date: -1 } }).then((docs) => {
+    res.json(docs);
   });
 });
 
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    error: err.message
+  });
+});
 
 app.listen(3000, () => {
   console.log('Todo app listening on port 3000!');
