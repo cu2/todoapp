@@ -1,16 +1,16 @@
 'use strict';
 
-var express = require('express');
-var bodyparser = require('body-parser');
-var mongo = require('mongodb');
-var monk = require('monk');
+const express = require('express');
+const bodyparser = require('body-parser');
+const mongo = require('mongodb');
+const monk = require('monk');
 
-var app = express();
+const app = express();
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 
-var db = monk('localhost:27017/tododb');
-var collection = db.get('todo');
+const db = monk('localhost:27017/tododb');
+const collection = db.get('todo');
 
 
 app.use('/static', express.static(__dirname + '/static'));
