@@ -30,6 +30,37 @@ app.post('/todo/', (req, res) => {
   });
 });
 
+app.get('/todo/:id/?', function (req, res) {
+  collection.findOne({_id: req.params.id}).then((doc) => {
+    res.json(doc);
+  });
+});
+
+app.put('/todo/:id/?', function (req, res) {
+  let updateObj = {};
+  if (req.body.text !== undefined) {
+    updateObj.text = req.body.text;
+  }
+  if (req.body.done !== undefined) {
+    updateObj.done = req.body.done;
+  }
+  if (Object.keys(updateObj).length > 0) {
+    collection.findOneAndUpdate({_id: req.params.id}, {$set: updateObj}).then((doc) => {
+      res.json(doc);
+    });
+  } else {
+    res.status(400).json({
+      error: 'No field specified to update.'
+    });
+  }
+});
+
+app.delete('/todo/:id/?', function (req, res) {
+  collection.findOneAndDelete({_id: req.params.id}).then((doc) => {
+    res.json(doc);
+  });
+});
+
 app.get('/todo/', (req, res) => {
   // TODO: add filter based on req.query.done
   collection.find({}, { sort: { date: -1 } }).then((docs) => {
