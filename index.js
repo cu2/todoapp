@@ -62,8 +62,11 @@ app.delete('/todo/:id/?', function (req, res) {
 });
 
 app.get('/todo/', (req, res) => {
-  // TODO: add filter based on req.query.done
-  collection.find({}, { sort: { date: -1 } }).then((docs) => {
+  let filterObj = {};
+  if (req.query.done !== undefined) {
+    filterObj = { done: (req.query.done === '1' || req.query.done === 'true') };
+  }
+  collection.find(filterObj, { sort: { date: -1 } }).then((docs) => {
     res.json(docs);
   });
 });
