@@ -13,3 +13,19 @@ body {
 li {
   margin-left: 24px;
 }
+.checkmark {
+  display: none;
+  cursor: pointer;
+}
+#todo_list ul li:hover .checkmark {
+  display: inline-block;
+  color: rgb(220,220,220);
+}
+#todo_list ul li:hover .checkmark.done {
+  display: inline-block;
+  color: rgb(0,200,0);
+}
+.checkmark.done {
+  display: inline-block;
+  color: rgb(0,200,0);
+}
