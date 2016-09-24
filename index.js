@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 
-const db = monk('localhost:27017/tododb');
+const db = monk(process.env.MONGODB_URL || 'localhost:27017/tododb');
 const collection = db.get('todo');
 
 
