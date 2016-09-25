@@ -37,3 +37,15 @@ li {
   display: inline-block;
   color: rgb(220,220,220);
 }
+.edittodo {
+  display: none;
+}
+.todoitem.editmode .edittodo {
+  display: inline-block;
+}
+.todoitem.editmode .todotext {
+  display: none;
+}
+.todoitem {
+  cursor: pointer;
+}

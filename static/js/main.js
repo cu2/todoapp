@@ -39,8 +39,9 @@ var TodoApp = {
     let html = [];
     html.push('<ul>');
     $.each(TodoApp.items, (idx, item) => {
-      html.push('<li id="todo_' + item._id + '">');
-      html.push(item.text);
+      html.push('<li id="todo_' + item._id + '" class="todoitem">');
+      html.push('<span class="todotext">' + item.text + '</span>');
+      html.push('<input class="edittodo" type="text" value="' + item.text + '" />');
       html.push(' <span class="checkmark' + (item.done ? ' done' : '') + '">&check;</span>');
       html.push(' <span class="trashbin">&cross;</span>');
       html.push('</li>');
@@ -72,10 +73,24 @@ var TodoApp = {
       TodoApp.editTodo(todoId, { done: newDone }, () => {
         TodoApp.getTodos(TodoApp.render);
       });
+      e.stopPropagation();
     });
     $(document).on('click', '.trashbin', (e) => {
       let todoId = $(e.target).closest('li').attr('id').slice(5);
       TodoApp.deleteTodo(todoId, () => {
+        TodoApp.getTodos(TodoApp.render);
+      });
+      e.stopPropagation();
+    });
+    $(document).on('click', '.todoitem', (e) => {
+      $(e.target).closest('li').addClass('editmode');
+      $(e.target).closest('li').find('input').focus();
+      e.stopPropagation();
+    });
+    $(document).on('blur', '.edittodo', (e) => {
+      let todoId = $(e.target).closest('li').attr('id').slice(5);
+      $(e.target).closest('li').removeClass('editmode');
+      TodoApp.editTodo(todoId, { text: $(e.target).val() }, () => {
         TodoApp.getTodos(TodoApp.render);
       });
     });
