@@ -29,3 +29,11 @@ li {
   display: inline-block;
   color: rgb(0,200,0);
 }
+.trashbin {
+  display: none;
+  cursor: pointer;
+}
+#todo_list ul li:hover .trashbin {
+  display: inline-block;
+  color: rgb(220,220,220);
+}

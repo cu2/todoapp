@@ -27,13 +27,22 @@ var TodoApp = {
       success: callback,
     });
   },
+  deleteTodo: (todoId, callback) => {
+    $.ajax({
+      type: 'DELETE',
+      url: '/todo/' + todoId + '/',
+      contentType: 'application/json',
+      success: callback,
+    });
+  },
   render: () => {
     let html = [];
     html.push('<ul>');
     $.each(TodoApp.items, (idx, item) => {
       html.push('<li id="todo_' + item._id + '">');
       html.push(item.text);
-      html.push(' <span id="todo_' + item._id + '" class="checkmark' + (item.done ? ' done' : '') + '">&check;</span>');
+      html.push(' <span class="checkmark' + (item.done ? ' done' : '') + '">&check;</span>');
+      html.push(' <span class="trashbin">&cross;</span>');
       html.push('</li>');
     });
     html.push('</ul>');
@@ -61,6 +70,12 @@ var TodoApp = {
       let newDone = !$(e.target).hasClass('done');
       let todoId = $(e.target).closest('li').attr('id').slice(5);
       TodoApp.editTodo(todoId, { done: newDone }, () => {
+        TodoApp.getTodos(TodoApp.render);
+      });
+    });
+    $(document).on('click', '.trashbin', (e) => {
+      let todoId = $(e.target).closest('li').attr('id').slice(5);
+      TodoApp.deleteTodo(todoId, () => {
         TodoApp.getTodos(TodoApp.render);
       });
     });
