@@ -66,7 +66,7 @@ app.get('/todo/', (req, res) => {
   if (req.query.done !== undefined) {
     filterObj = { done: (req.query.done === '1' || req.query.done === 'true') };
   }
-  collection.find(filterObj, { sort: { date: -1 } }).then((docs) => {
+  collection.find(filterObj, { sort: 'created_at' }).then((docs) => {
     res.json(docs);
   });
 });
